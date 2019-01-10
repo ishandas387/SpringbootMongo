@@ -13,17 +13,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.id.mongo.mongointegration.model.Student;
 import com.id.mongo.mongointegration.repo.StudentRepository;
+import com.id.mongo.mongointegration.service.FileReaderService;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
   @Autowired
   private StudentRepository repository;
+  
+  @Autowired
+  private FileReaderService fileReaderService;
   
   @GetMapping(value = "/")
   public List<Student> getAllStudent() {
@@ -49,5 +52,11 @@ public class StudentController {
   @DeleteMapping(value = "/{id}")
   public void deleteS(@PathVariable ObjectId id) {
     repository.delete(repository.findByid(id));
+  }
+  
+  @GetMapping(value = "/testfolder")
+  public String getFileNames() {
+	  fileReaderService.jsonFileReader();
+    return "done";
   }
 }
