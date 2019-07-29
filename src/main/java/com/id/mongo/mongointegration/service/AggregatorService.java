@@ -23,7 +23,7 @@ public class AggregatorService {
 	public List<Workorder> getAggregatedResult(){
 		
 		AggregationOperation sortByCountCreation = Aggregation.sort(new Sort(Direction.ASC, "_id")) ;
-		AggregationOperation groupbyWorkorderId= Aggregation.group("wId").last("otherProps").as("otherProps");
+		AggregationOperation groupbyWorkorderId= Aggregation.group("wid").last("otherProps").as("otherProps").last("wid").as("wid");
 		Aggregation aggregation = Aggregation.newAggregation(sortByCountCreation, groupbyWorkorderId);
 		AggregationResults<Workorder> aggregate = mongoTemplate.aggregate(aggregation, Workorder.class, Workorder.class);
 		return aggregate.getMappedResults();
