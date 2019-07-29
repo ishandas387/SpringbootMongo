@@ -10,4 +10,4 @@ import com.id.mongo.mongointegration.model.Student;
 public interface StudentRepository extends MongoRepository<Student, String> {
 
 	Student findByid(ObjectId id);
-}
+} 

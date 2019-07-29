@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.id.mongo.mongointegration.model.Student;
+import com.id.mongo.mongointegration.model.Workorder;
 import com.id.mongo.mongointegration.repo.StudentRepository;
+import com.id.mongo.mongointegration.repo.WoRepository;
+import com.id.mongo.mongointegration.service.AggregatorService;
 import com.id.mongo.mongointegration.service.FileReaderService;
 
 @RestController
@@ -26,7 +29,13 @@ public class StudentController {
   private StudentRepository repository;
   
   @Autowired
+  private WoRepository woRepository;
+  
+  @Autowired
   private FileReaderService fileReaderService;
+  
+  @Autowired
+  private AggregatorService aggregatorService;
   
   @GetMapping(value = "/")
   public List<Student> getAllStudent() {
@@ -58,5 +67,18 @@ public class StudentController {
   public String getFileNames() {
 	  fileReaderService.jsonFileReader();
     return "done";
+  }
+  
+  
+  @GetMapping(value = "/aggregate")
+  public List<Workorder> getAggregatedWo() {
+	  
+    return aggregatorService.getAggregatedResult();
+  }
+  
+  @GetMapping(value = "/wo")
+  public List<Workorder> getAll() {
+	  
+    return woRepository.findAll();
   }
 }
